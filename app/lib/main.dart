@@ -17,12 +17,25 @@ class TodoApp extends StatelessWidget {
   }
 }
 
+// 一覧画面
 class TodoListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Text('Todoリストの一覧画面'),
+      ),
+    );
+  }
+}
+
+// 追加画面
+class TodoAddPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text("TODOの追加画面"),
       ),
     );
   }
