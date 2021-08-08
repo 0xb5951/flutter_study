@@ -46,7 +46,14 @@ class TodoAddPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("TODOの追加画面"),
+        child: TextButton(
+          // ボタンを押した時
+          onPressed: () {
+            // 前の画面に戻る
+            Navigator.of(context).pop();
+          },
+          child: Text("一覧画面に戻る"),
+        ),
       ),
     );
   }
