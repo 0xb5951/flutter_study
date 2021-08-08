@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  flutter:
+    build: .
+    container_name: flutter_todo
+    tty: true
+    environment:
+      - no_proxy=127.0.0.1,localhost
+      - DISPLAY=:1
+    volumes:
+      - "../app:/home/circleci/app" # あとでlongに修正する
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/kvm:/dev/kvm
