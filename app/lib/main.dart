@@ -25,6 +25,17 @@ class TodoListPage extends StatelessWidget {
       body: Center(
         child: Text('Todoリストの一覧画面'),
       ),
+      floatingActionButton: FloatingActionButton(
+        // 押した時
+        onPressed: () {
+          // Navigatorにpushすると、新しいページに移動
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            // TODO追加画面に移動
+            return TodoAddPage();
+          }));
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
