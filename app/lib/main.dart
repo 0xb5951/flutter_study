@@ -22,6 +22,9 @@ class TodoListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("TODOリスト一覧"),
+      ),
       body: Center(
         child: Text('Todoリストの一覧画面'),
       ),
