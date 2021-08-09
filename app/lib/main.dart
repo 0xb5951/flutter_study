@@ -48,17 +48,38 @@ class TodoListPage extends StatelessWidget {
   }
 }
 
+class TodoAddPage extends StatefulWidget {
+  @override
+  _TodoAddPageState createState() => _TodoAddPageState();
+}
+
 // 追加画面
-class TodoAddPage extends StatelessWidget {
+class _TodoAddPageState extends State<TodoAddPage> {
+  String _text = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("リスト追加画面")),
       body: Container(
+        padding: EdgeInsets.all(64),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(),
+            // 入力したテキストを表示
+            Text(
+              _text,
+              style: TextStyle(color: Colors.blue),
+            ),
+            TextField(
+              // 入力されたテキストを更新する(valueが更新されたテキスト)
+              onChanged: (String value) {
+                // ステートを更新
+                setState(() {
+                  _text = value;
+                });
+              },
+            ),
             const SizedBox(
               height: 8,
             ),
@@ -86,16 +107,6 @@ class TodoAddPage extends StatelessWidget {
           ],
         ),
       ),
-      // Center(
-      //   child: TextButton(
-      //     // ボタンを押した時
-      //     onPressed: () {
-      //       // 前の画面に戻る
-      //       Navigator.of(context).pop();
-      //     },
-      //     child: Text("一覧画面に戻る"),
-      //   ),
-      // ),
     );
   }
 }
