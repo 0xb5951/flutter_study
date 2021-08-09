@@ -21,6 +21,19 @@ xhost +local:
 ### tips
 - emulator起動させた直後は、重いのでちょっと待つ必要がある
 
+## 学んだことを以下に書く
+- Scaffoldでページのベースを作るところから始める
+- Navigatorで画面遷移。これはページをstackに入れるイメージ
+- スクロール可能なリストは、ListViewを使う。内部にwidget要素を配置する
+- ただ、上記だと寂しいので、Card要素などで対象を装飾する
+- StatefulWidgetは内部にState要素の更新をさせる部分と持ち、内容を書くのはState側
+```
+class TodoAddPage extends StatefulWidget {
+  @override
+  _TodoAddPageState createState() => _TodoAddPageState();
+}
+```
+- 要素の内部で変更を伝えるときは、SetState()を使う。onChangeなどと組み合わせる
 
 ## 参考になる資料
 
