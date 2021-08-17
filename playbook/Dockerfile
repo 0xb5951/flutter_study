@@ -29,7 +29,5 @@ RUN git clone https://github.com/flutter/flutter.git -b stable
 ENV PATH $PATH:/home/$USER/flutter/bin/
 RUN flutter precache
 RUN yes | flutter doctor --android-licenses && flutter doctor
-RUN /home/$USER/app && \
-    flutter pub get
 
 ENTRYPOINT [ "bash", "./run_second_startup.sh" ]

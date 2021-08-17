@@ -9,5 +9,6 @@ if [ ! -e $CONTAINER_ALREADY_STARTED ]; then
     while true; do sleep 1000; done
 else
     echo "-- Not first container startup --"
+    cd /home/circleci/app && flutter pub get
     sudo chown circleci -R /dev/kvm
 fi
