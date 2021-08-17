@@ -3,6 +3,11 @@ Flutterのことを理解するために簡単なTODOアプリを作る。
 基本的に以下の記事を写経する。
 https://www.flutter-study.dev/todo-app/about-todo-app
 
+上記を実装できた。
+何となく肌間は掴んできたが、テストやUIの実装をもうちょっと試したい。
+以下の記事をつまみながら実装する。
+https://www.flutter-study.dev/create-ui/top
+
 
 ## 開発周り
 ## Emulatorの起動
@@ -34,6 +39,26 @@ class TodoAddPage extends StatefulWidget {
 }
 ```
 - 要素の内部で変更を伝えるときは、SetState()を使う。onChangeなどと組み合わせる
+- main要素にRoute要素をまとめて設定しておくことができる
+```
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MainPage(),
+      routes: <String, WidgetBuilder> {
+        '/home': (BuildContext context) => new MainPage(),
+        '/subpage': (BuildContext context) => new SubPage()
+      },
+    );
+  }
+}
+
+  // 使う時 
+  RaisedButton(onPressed: () => Navigator.of(context).pushNamed("/subpage"), child: new Text('Subページへ'),)
+```
+- 色々な要素を配置するときは、要素ごとに分けて、メイン要素内部にそれぞれ配置すればよい
+- サイドバーはNavigationRail()で実現できる
 
 ## 参考になる資料
 
