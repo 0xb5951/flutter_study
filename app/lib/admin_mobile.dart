@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: use_key_in_widget_constructors
 class AdminMobilePage extends StatefulWidget {
   @override
   _AdminMobilePageState createState() => _AdminMobilePageState();
@@ -26,6 +27,7 @@ class _AdminMobilePageState extends State<AdminMobilePage> {
   }
 }
 
+// ignore: use_key_in_widget_constructors
 class SideBar extends StatefulWidget {
   @override
   _SideBar createState() => _SideBar();
@@ -43,31 +45,35 @@ class _SideBar extends State<SideBar> {
       onDestinationSelected: (index) {
         selectedIndex = index;
       },
+      // ignore: prefer_const_literals_to_create_immutables
       destinations: [
-        NavigationRailDestination(
+        const NavigationRailDestination(
             icon: Icon(Icons.people), label: Text("People")),
-        NavigationRailDestination(
+        const NavigationRailDestination(
             icon: Icon(Icons.thumbs_up_down), label: Text("Thunb up down")),
-        NavigationRailDestination(icon: Icon(Icons.face), label: Text("Face")),
-        NavigationRailDestination(
+        const NavigationRailDestination(
+            icon: Icon(Icons.face), label: Text("Face")),
+        const NavigationRailDestination(
             icon: Icon(Icons.bookmark), label: Text("bookmark")),
       ],
     );
   }
 }
 
+// ignore: use_key_in_widget_constructors
 class PostList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       // 画面上部に対するpadding
-      padding: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 16),
       child: Column(
         // 要素を縦に並べたいのでcolumn
         mainAxisSize: MainAxisSize.max,
         children: [
           _PostsHeader(),
           Expanded(
+            // ListViewで要素が増えても無限スクロールにしている
             child: ListView(
               children: [
                 _PostGreen(),
@@ -190,7 +196,7 @@ class _Post extends StatelessWidget {
                 ),
               ),
               title: Text(name),
-              subtitle: Text('2 min ago'),
+              subtitle: const Text('2 min ago'),
             ),
             // 真ん中の円とメッセージ部分
             Container(
@@ -230,7 +236,7 @@ class _Post extends StatelessWidget {
                     ),
                     child: Text(
                       textReason,
-                      style: TextStyle(color: Colors.blueAccent),
+                      style: const TextStyle(color: Colors.blueAccent),
                     ),
                   ),
                   // textReasonとネガティブボタンの間padding
