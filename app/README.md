@@ -59,6 +59,10 @@ class MyApp extends StatelessWidget {
 ```
 - 色々な要素を配置するときは、要素ごとに分けて、メイン要素内部にそれぞれ配置すればよい
 - サイドバーはNavigationRail()で実現できる
+- 基本はRow, Columnを配置してpaddingで調整
+- 要素間のpaddingはContainer内に入れるか、sizedBoxを使う
+- 要素ごとにそれぞれ組み合わせて、組み立てていく
+
 
 ## 参考になる資料
 
