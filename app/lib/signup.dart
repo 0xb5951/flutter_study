@@ -23,10 +23,11 @@ class _HeaderBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipPath(
+      clipper: _HeaderBackgroundClipper(),
       // 背景の赤い要素
       child: Container(
         width: double.infinity, // 要素のサイズを最大限まで大きくする
-        height: 400,
+        height: 300,
         decoration: const BoxDecoration(
             gradient: LinearGradient(
                 // 左上から右下にかけてグラデーションを作る
@@ -42,5 +43,28 @@ class _HeaderBackground extends StatelessWidget {
             ])),
       ),
     );
+  }
+}
+
+class _HeaderBackgroundClipper extends CustomClipper<Path> {
+  // 切り抜く形
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height * 0.5);
+    path.quadraticBezierTo(
+        size.width * 0.55,
+        size.height, // コントロールポイント
+        size.width,
+        size.height * 0.6 // ゴール
+        );
+    path.lineTo(size.width, 0);
+    return path;
+  }
+
+  // オブジェクトを更新したときに、再生成するか
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }
