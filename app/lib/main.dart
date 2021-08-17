@@ -21,7 +21,7 @@ class TodoApp extends StatelessWidget {
         'main': (BuildContext context) => new HomeRoutePage(),
         'todos': (BuildContext context) => new TodoListPage(),
         "admin_mobile": (BuildContext context) => new AdminMobilePage(),
-        'signup': (BuildContext context) => new SignUpPage(),
+        'signup': (BuildContext context) => new SignUpSignInWelcomePage(),
       },
     );
   }
