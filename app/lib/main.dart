@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "./todos.dart";
 import "./admin_mobile.dart";
+import "./signup.dart";
 
 void main() {
   runApp(TodoApp());
@@ -20,6 +21,7 @@ class TodoApp extends StatelessWidget {
         'main': (BuildContext context) => new HomeRoutePage(),
         'todos': (BuildContext context) => new TodoListPage(),
         "admin_mobile": (BuildContext context) => new AdminMobilePage(),
+        'signup': (BuildContext context) => new SignUpPage(),
       },
     );
   }
@@ -45,6 +47,14 @@ class HomeRoutePage extends StatelessWidget {
                 title: Text("Admin Mobile"),
                 onTap: () {
                   Navigator.of(context).pushNamed('admin_mobile');
+                },
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: const Text("SignUp/SignIn"),
+                onTap: () {
+                  Navigator.of(context).pushNamed('signup');
                 },
               ),
             )
