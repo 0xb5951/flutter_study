@@ -33,14 +33,25 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: avoid_unnecessary_containers
+    // ignore: sized_box_for_whitespace
     return Container(
+      height: height,
       child: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [
           _HeaderBackground(height: height),
           _HeaderCircle(height: height),
-          const _HeaderTitle(),
-          const _HeaderBackButton(),
+          const Padding(
+            padding: EdgeInsets.only(top: 128),
+            child: _HeaderTitle(),
+          ),
+          // 戻るボタンは左上に表示
+          const Positioned(
+            top: 16,
+            left: 0,
+            child: _HeaderBackButton(),
+          ),
         ],
       ),
     );
@@ -117,8 +128,8 @@ class _HeaderCirclePainter extends CustomPainter {
       ..strokeWidth = 6;
 
     // 場所、半径、どの様に描画するか
-    canvas.drawCircle(Offset(size.width * 0.25, size.height * 0.4), 12, paint);
-    canvas.drawCircle(Offset(size.width * 0.75, size.height * 0.2), 12, paint);
+    canvas.drawCircle(Offset(size.width * 0.20, size.height * 0.4), 12, paint);
+    canvas.drawCircle(Offset(size.width * 0.80, size.height * 0.2), 12, paint);
   }
 
   // 再描画のタイミングで再生成するか
@@ -181,6 +192,7 @@ class _HeaderBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+        // 周りの白い縁の部分
         style: TextButton.styleFrom(
           primary: kButtonColorPrimary,
           backgroundColor: Colors.transparent,
