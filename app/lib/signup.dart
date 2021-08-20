@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+const Color kAccentColor = Color(0xFFFE7C64);
+const Color kBackgroundColor = Color(0xFF19283D);
+const Color kTextColorPrimary = Color(0xFFECEFF1);
+const Color kTextColorSecondary = Color(0xFFB0BEC5);
+const Color kButtonColorPrimary = Color(0xFFECEFF1);
+const Color kButtonTextColorPrimary = Color(0xFF455A64);
+const Color kIconColor = Color(0xFF455A64);
+
 // ignore: use_key_in_widget_constructors
 class SignUpSignInWelcomePage extends StatelessWidget {
   @override
@@ -12,6 +20,8 @@ class SignUpSignInWelcomePage extends StatelessWidget {
               // この中にヘッダー、フォーム、フッダーを書いていく
               _HeaderBackground(),
               _HeaderCircle(),
+              const _HeaderTitle(),
+              const _HeaderBackButton(),
             ],
           ),
         ),
@@ -20,6 +30,7 @@ class SignUpSignInWelcomePage extends StatelessWidget {
   }
 }
 
+// オレンジ色の背景
 class _HeaderBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -91,7 +102,7 @@ class _HeaderCirclePainter extends CustomPainter {
   bool shouldRepaint(_HeaderCirclePainter oldDelegate) => false;
 }
 
-// この要素だけだと、背景の上に乗せることができない
+// ２つの小さい丸
 class _HeaderCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -102,5 +113,57 @@ class _HeaderCircle extends StatelessWidget {
         height: 400,
       ),
     );
+  }
+}
+
+// ヘッダー真ん中のタイトル
+class _HeaderTitle extends StatelessWidget {
+  const _HeaderTitle({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          "Welcome",
+          style: Theme.of(context).textTheme.headline4!.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        Text(
+          "Sign in to continue",
+          style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+        ),
+      ],
+    );
+  }
+}
+
+// 左上の戻るボタン
+class _HeaderBackButton extends StatelessWidget {
+  const _HeaderBackButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        style: TextButton.styleFrom(
+          primary: kButtonColorPrimary,
+          backgroundColor: Colors.transparent,
+          shape: const CircleBorder(
+            side: BorderSide(color: kButtonColorPrimary),
+          ),
+        ),
+        onPressed: () {},
+        // 真ん中のアイコンだけ
+        child: const Icon(
+          Icons.chevron_left,
+          color: kIconColor,
+        ));
   }
 }
