@@ -29,7 +29,7 @@ class SignUpSignInWelcomePage extends StatelessWidget {
 
 // ヘッダー要素をまとめたクラス
 class _Header extends StatelessWidget {
-  final height = 320; // これで全体の要素を調整する
+  final double height = 320; // これで全体の要素を調整する
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,8 @@ class _Header extends StatelessWidget {
       child: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [
-          _HeaderBackground(),
-          _HeaderCircle(),
+          _HeaderBackground(height: height),
+          _HeaderCircle(height: height),
           const _HeaderTitle(),
           const _HeaderBackButton(),
         ],
@@ -49,6 +49,13 @@ class _Header extends StatelessWidget {
 
 // オレンジ色の背景
 class _HeaderBackground extends StatelessWidget {
+  final double height;
+
+  const _HeaderBackground({
+    Key? key,
+    required this.height,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ClipPath(
@@ -56,7 +63,7 @@ class _HeaderBackground extends StatelessWidget {
       // 背景の赤い要素
       child: Container(
         width: double.infinity, // 要素のサイズを最大限まで大きくする
-        height: 300,
+        height: height,
         decoration: const BoxDecoration(
             gradient: LinearGradient(
                 // 左上から右下にかけてグラデーションを作る
@@ -105,7 +112,7 @@ class _HeaderCirclePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.4)
+      ..color = Colors.white.withOpacity(0.4)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 6;
 
@@ -121,13 +128,18 @@ class _HeaderCirclePainter extends CustomPainter {
 
 // ２つの小さい丸
 class _HeaderCircle extends StatelessWidget {
+  final double height;
+
+  const _HeaderCircle({Key? key, required this.height}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: _HeaderCirclePainter(),
+      // ignore: sized_box_for_whitespace
       child: Container(
         width: double.infinity,
-        height: 400,
+        height: height,
       ),
     );
   }
