@@ -18,13 +18,30 @@ class SignUpSignInWelcomePage extends StatelessWidget {
           child: Column(
             children: [
               // この中にヘッダー、フォーム、フッダーを書いていく
-              _HeaderBackground(),
-              _HeaderCircle(),
-              const _HeaderTitle(),
-              const _HeaderBackButton(),
+              _Header(),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+// ヘッダー要素をまとめたクラス
+class _Header extends StatelessWidget {
+  final height = 320; // これで全体の要素を調整する
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(
+        alignment: AlignmentDirectional.topCenter,
+        children: [
+          _HeaderBackground(),
+          _HeaderCircle(),
+          const _HeaderTitle(),
+          const _HeaderBackButton(),
+        ],
       ),
     );
   }
