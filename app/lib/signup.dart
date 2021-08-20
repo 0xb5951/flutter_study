@@ -11,6 +11,7 @@ class SignUpSignInWelcomePage extends StatelessWidget {
             children: [
               // この中にヘッダー、フォーム、フッダーを書いていく
               _HeaderBackground(),
+              _HeaderCircle(),
             ],
           ),
         ),
@@ -66,5 +67,40 @@ class _HeaderBackgroundClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return true;
+  }
+}
+
+class _HeaderCirclePainter extends CustomPainter {
+  // 描画を定義する
+  // このsizeはCustomPaintで設定したsizeか、childの要素を参照する。
+  // 今回はchildで設定しているContainer
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black.withOpacity(0.4)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 6;
+
+    // 場所、半径、どの様に描画するか
+    canvas.drawCircle(Offset(size.width * 0.25, size.height * 0.4), 12, paint);
+    canvas.drawCircle(Offset(size.width * 0.75, size.height * 0.2), 12, paint);
+  }
+
+  // 再描画のタイミングで再生成するか
+  @override
+  bool shouldRepaint(_HeaderCirclePainter oldDelegate) => false;
+}
+
+// この要素だけだと、背景の上に乗せることができない
+class _HeaderCircle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: _HeaderCirclePainter(),
+      child: Container(
+        width: double.infinity,
+        height: 400,
+      ),
+    );
   }
 }
