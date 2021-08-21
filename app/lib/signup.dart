@@ -13,13 +13,15 @@ class SignUpSignInWelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
               // この中にヘッダー、フォーム、フッダーを書いていく
               _Header(),
-              _SignInForm(),
+              const _SignInForm(),
+              _Footer(),
             ],
           ),
         ),
@@ -292,7 +294,7 @@ class _SignInForm extends StatelessWidget {
             onPressed: () {},
             style: TextButton.styleFrom(
               primary: kButtonTextColorPrimary,
-              backgroundColor: kBackgroundColor,
+              backgroundColor: kButtonColorPrimary,
               padding: const EdgeInsets.symmetric(vertical: 16), // ボタン内の縦余白
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -303,7 +305,7 @@ class _SignInForm extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .button!
-                  .copyWith(color: kButtonColorPrimary, fontSize: 18),
+                  .copyWith(color: kButtonTextColorPrimary, fontSize: 18),
             ),
           ),
         ),
@@ -344,6 +346,32 @@ class _SignInForm extends StatelessWidget {
             ),
           ],
         )
+      ],
+    );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Don\'t have Account?',
+          style: Theme.of(context)
+              .textTheme
+              .bodyText2!
+              .copyWith(color: kTextColorSecondary),
+        ),
+        SizedBox(width: 4),
+        Text(
+          'Sign up',
+          style: Theme.of(context)
+              .textTheme
+              .bodyText2!
+              .copyWith(color: kTextColorPrimary),
+        ),
       ],
     );
   }
