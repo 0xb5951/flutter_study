@@ -203,7 +203,9 @@ class _HeaderBackButton extends StatelessWidget {
             side: BorderSide(color: kButtonColorPrimary),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
         // 真ん中のアイコンだけ
         child: const Icon(
           Icons.chevron_left,
