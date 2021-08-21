@@ -14,14 +14,16 @@ class TodoApp extends StatelessWidget {
     return MaterialApp(
       title: 'TodoApp',
       // テーマカラー
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData.dark().copyWith(
+        accentColor: kAccentColor,
+      ),
       // Todoリスト一覧画面を表示
       home: HomeRoutePage(),
       routes: <String, WidgetBuilder>{
-        'main': (BuildContext context) => new HomeRoutePage(),
-        'todos': (BuildContext context) => new TodoListPage(),
-        "admin_mobile": (BuildContext context) => new AdminMobilePage(),
-        'signup': (BuildContext context) => new SignUpSignInWelcomePage(),
+        'main': (BuildContext context) => HomeRoutePage(),
+        'todos': (BuildContext context) => TodoListPage(),
+        "admin_mobile": (BuildContext context) => AdminMobilePage(),
+        'signup': (BuildContext context) => SignUpSignInWelcomePage(),
       },
     );
   }
