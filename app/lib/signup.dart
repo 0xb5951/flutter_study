@@ -20,8 +20,15 @@ class SignUpSignInWelcomePage extends StatelessWidget {
             children: [
               // この中にヘッダー、フォーム、フッダーを書いていく
               _Header(),
-              const _SignInForm(),
-              _Footer(),
+              const Padding(
+                // 親要素でサイズ指定して、内部のボタンはinfiniteにする
+                padding: EdgeInsets.symmetric(horizontal: 32),
+                child: _SignInForm(),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 64),
+                child: _Footer(),
+              ),
             ],
           ),
         ),
@@ -366,7 +373,7 @@ class _Footer extends StatelessWidget {
               .bodyText2!
               .copyWith(color: kTextColorSecondary),
         ),
-        SizedBox(width: 4),
+        const SizedBox(width: 8),
         Text(
           'Sign up',
           style: Theme.of(context)
