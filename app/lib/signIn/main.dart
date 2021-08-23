@@ -12,7 +12,7 @@ const Color kButtonTextColorPrimary = Color(0xFF455A64);
 const Color kIconColor = Color(0xFF455A64);
 
 // ignore: use_key_in_widget_constructors
-class SignUpSignInWelcomePage extends StatelessWidget {
+class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
