@@ -17,14 +17,57 @@ class BatteryOptimizerPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Battery Optimizer'),
+        centerTitle: false,
+        elevation: 0,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: [],
+            children: [
+              OptimizerButtons(),
+            ],
           ),
         ),
       ),
     );
+  }
+}
+
+class OptimizerButtons extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          children: [
+            const SizedBox(width: 16),
+            const _OptimizerButton(title: 'Battery Optimizer'),
+            const SizedBox(width: 16),
+            const _OptimizerButton(title: 'Connection Optimizer'),
+            const SizedBox(width: 16),
+            const _OptimizerButton(title: 'Memory Optimizer'),
+            const SizedBox(width: 16),
+            const _OptimizerButton(title: 'Storage Optimizer'),
+            const SizedBox(width: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _OptimizerButton extends StatelessWidget {
+  final String title;
+
+  const _OptimizerButton({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(onPressed: () {}, child: Text(title));
   }
 }
