@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import "./todos.dart";
-import "./admin_mobile.dart";
-import 'signIn/signIn.dart';
+import "package:app/todos.dart";
+import "package:app/admin_mobile.dart";
+import 'package:app/signIn/main.dart';
 
 void main() {
   runApp(TodoApp());
