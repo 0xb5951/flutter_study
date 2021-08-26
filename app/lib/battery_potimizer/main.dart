@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/battery_potimizer/app_list.dart';
 import 'package:app/battery_potimizer/optimizer_buttons.dart';
-import 'dart:math'; // インジケータの実装に使う
+import 'package:app/battery_potimizer/indicator.dart';
 
 const bColorPurple = Color(0xFF8337EC);
 const bColorPink = Color(0xFFFF006F);
@@ -33,35 +33,6 @@ class BatteryOptimizerPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _BatteryLevelIndicatorPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint();
-    final c = Offset(size.width / 2, size.height / 2);
-
-    canvas.drawCircle(c, 80, paint);
-  }
-
-  @override
-  bool shouldRepaint(_BatteryLevelIndicatorPainter oldDelegate) => false;
-
-  @override
-  bool shouldRebuildSemantics(_BatteryLevelIndicatorPainter oldDelegate) =>
-      false;
-}
-
-class BatteryLevelIndicator extends StatelessWidget {
-  const BatteryLevelIndicator({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _BatteryLevelIndicatorPainter(),
-      size: Size(400, 400),
     );
   }
 }
