@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/battery_potimizer/app_list.dart';
-import 'package:app/battery_potimizer/optimizer_buttons.dart';
+import 'package:app/battery_potimizer/top_buttons.dart';
 import 'package:app/battery_potimizer/indicator.dart';
+import 'package:app/battery_potimizer/optimize_button.dart';
 
 const bColorPurple = Color(0xFF8337EC);
 const bColorPink = Color(0xFFFF006F);
@@ -29,6 +30,7 @@ class BatteryOptimizerPage extends StatelessWidget {
               const OptimizerButtons(),
               const BatteryLevelIndicator(),
               const AppList(),
+              OptimizeButton(),
             ],
           ),
         ),
