@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import "./todos.dart";
-import "./admin_mobile.dart";
-import 'signIn/signIn.dart';
+import "package:app/todos.dart";
+import "package:app/admin_mobile.dart";
+import 'package:app/signIn/main.dart';
+import 'package:app/battery_potimizer/main.dart';
 
 void main() {
   runApp(TodoApp());
@@ -23,7 +24,8 @@ class TodoApp extends StatelessWidget {
         'main': (BuildContext context) => HomeRoutePage(),
         'todos': (BuildContext context) => TodoListPage(),
         "admin_mobile": (BuildContext context) => AdminMobilePage(),
-        'signup': (BuildContext context) => SignUpSignInWelcomePage(),
+        'signup': (BuildContext context) => SignInPage(),
+        'battery': (BuildContext context) => BatteryOptimizerPage(),
       },
     );
   }
@@ -34,12 +36,12 @@ class HomeRoutePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("メインルート画面")),
+        appBar: AppBar(title: const Text("メインルート画面")),
         body: ListView(
           children: <Widget>[
             Card(
               child: ListTile(
-                title: Text("TODOリスト"),
+                title: const Text("TODOリスト"),
                 onTap: () {
                   Navigator.of(context).pushNamed('todos');
                 },
@@ -47,7 +49,7 @@ class HomeRoutePage extends StatelessWidget {
             ),
             Card(
               child: ListTile(
-                title: Text("Admin Mobile"),
+                title: const Text("Admin Mobile"),
                 onTap: () {
                   Navigator.of(context).pushNamed('admin_mobile');
                 },
@@ -55,9 +57,17 @@ class HomeRoutePage extends StatelessWidget {
             ),
             Card(
               child: ListTile(
-                title: const Text("SignUp/SignIn"),
+                title: const Text("SignIn"),
                 onTap: () {
                   Navigator.of(context).pushNamed('signup');
+                },
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: const Text("Battery Optimizer"),
+                onTap: () {
+                  Navigator.of(context).pushNamed("battery");
                 },
               ),
             )

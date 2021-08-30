@@ -69,6 +69,9 @@ Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w500,)
 - ある程度自由に図形を書きたいときはCustomPaintを使う
 - Widgetのstyle系は〇〇Style系のwidgetが存在する
 - クラス名の先頭に_をつけると、privateになる
+- ボタン系は〇〇.styleFormでスタイルを調整する
+- 構造変更したり、widget追加するときとかは、Ctrl+Shift+Rでリファクタを使うと楽
+- UIを仮おきしておきたいところは、Placeholder()を使うと良し
 
 
 ## 参考になる資料
