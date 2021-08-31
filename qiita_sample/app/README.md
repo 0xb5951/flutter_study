@@ -1,16 +1,11 @@
-# app
+# 目的
+UIの練習でFlutterの肌間が分かってきたので、次はもうちょっとアプリっぽいものを作ってみる。
+以下のページを参考にQiitaが閲覧できるサービスを作ってみる。
+https://www.flutter-study.dev/create-app/qiita-app
 
-A new Flutter project.
 
-## Getting Started
+## 設計
+### Qiita APIについて
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### tips
