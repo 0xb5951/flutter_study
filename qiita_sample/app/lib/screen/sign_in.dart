@@ -14,34 +14,34 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
-                height: 260,
-              ),
-              _Title(), // 真ん中のタイトル
-              SizedBox(
-                height: 180,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 32), // ページの横からをpaddingする。数字を少なくすれば長くなる
-                child: Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Qiita ログイン',
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                    style: ElevatedButton.styleFrom(
+              const Expanded(
+                flex: 7,
+                child: _Title(),
+              ), // 真ん中のタイトル
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Container(
+                    width: double.infinity,
+                    // Containerの上にPaddingでも、Container自体にmargin入れても変わらない
+                    margin: const EdgeInsets.symmetric(horizontal: 32),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Qiita ログイン',
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ),
+                      style: ElevatedButton.styleFrom(
                         primary: Colors.white,
-                        padding: EdgeInsets.symmetric(horizontal: 32)),
+                      ),
+                    ),
                   ),
                 ),
               ), // ログインボタン
-              SizedBox(
-                height: 80,
+              const Expanded(
+                flex: 2,
+                child: _Footer(),
               ),
-              _Footer(),
             ],
           ),
         ),
@@ -58,13 +58,14 @@ class _Title extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'Qiita App',
             style: TextStyle(color: Colors.white, fontSize: 32),
           ),
-          SizedBox(
-            height: 10,
+          const SizedBox(
+            height: 8,
           ),
           Text(
             'Qiitaクライアントアプリ',
@@ -86,17 +87,18 @@ class _Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           'Ver. 1.0.0',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 12),
         ),
-        SizedBox(
-          height: 12,
+        const SizedBox(
+          height: 8,
         ),
-        Text(
+        const Text(
           'OSS Licenses',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 12),
         ),
       ],
     );
