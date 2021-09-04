@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart' as sp;
 
 class QiitaRepository {
   final clientID = 'XXX'; // 登録したアプリケーションの ClientID を設定する
@@ -13,6 +14,7 @@ class QiitaRepository {
 
   // 内部で非同期処理を行うからFutureクラスつけている。
   // 戻り値の型は<>に書いてある
+  // qiitaのアクセストークンを取得してくる
   Future<String> createAccessTokenFromCallbackUri(
     Uri uri,
     String expectedState,
@@ -37,5 +39,11 @@ class QiitaRepository {
     final accessToken = body['token'];
 
     return accessToken;
+  }
+
+  Future<void> saveAccessToken(String accessToken) async {
+    final sp.SharedPreferences prefs = await sp.SharedPreferences.getInstance();
+    // keyAccessTokenという名前でaccessTokenをローカルに保存する
+    await prefs.setString(keyAccessToken, accessToken);
   }
 }
