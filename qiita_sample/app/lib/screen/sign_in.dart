@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'dart:math' as math;
+import 'package:uni_links/uni_links.dart' as uni_links;
 
 import 'package:app/repository.dart';
 
@@ -13,6 +16,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final QiitaRepository repository = QiitaRepository();
 
   late String _state;
+  late StreamSubscription<Uri> _subscription;
 
   @override
   void initState() {
@@ -20,6 +24,18 @@ class _SignInScreenState extends State<SignInScreen> {
     super.initState();
 
     _state = _randomString(40);
+    _subscription = uni_links.getUriLinksStream().listen((Uri uri) {
+      if (uri.path == '/oauth/authorize/callback') {
+        _onAuthorizeCallbackIsCalled(uri);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // Steamの購読を停止
+    _subscription.cancel();
   }
 
   @override
@@ -65,6 +81,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+// Qiitaのログイン画面を開く
   void _signInButtonIsPressed() {
     // launchには開きたいURLを渡す
     url_launcher.launch(repository.createAuthorizeUrl(_state));
@@ -82,6 +99,13 @@ class _SignInScreenState extends State<SignInScreen> {
     });
     // codeUnitにはUTF-16化した文字コードのリストが入っている
     return String.fromCharCodes(codeUnit);
+  }
+
+  void _onAuthorizeCallbackIsCalled(Uri uri) async {
+    url_launcher.closeWebView();
+
+    final accessToken =
+        await repository.createAccessTokenFromCallbackUri(uri, _state);
   }
 }
 
