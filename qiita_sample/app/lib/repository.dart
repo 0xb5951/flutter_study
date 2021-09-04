@@ -1,10 +1,13 @@
 import 'dart:convert' as convert;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart' as sp;
 
 class QiitaRepository {
-  final clientID = 'XXX'; // 登録したアプリケーションの ClientID を設定する
-  final clientSecret = 'YYY'; // 登録したアプリケーションの ClientSecret を設定する
+  final clientID =
+      DotEnv().env['QIITA_CLIENT_ID']; // 登録したアプリケーションの ClientID を設定する
+  final clientSecret =
+      DotEnv().env['QIITA_CLIENT_SECRET']; // 登録したアプリケーションの ClientSecret を設定する
   final keyAccessToken = 'qiita/accessToken';
 
   String createAuthorizeUrl(String state) {
