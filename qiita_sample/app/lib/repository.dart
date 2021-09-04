@@ -5,9 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart' as sp;
 
 class QiitaRepository {
   final clientID =
-      DotEnv().env['QIITA_CLIENT_ID']; // 登録したアプリケーションの ClientID を設定する
+      dotenv.env['QIITA_CLIENT_ID']; // 登録したアプリケーションの ClientID を設定する
   final clientSecret =
-      DotEnv().env['QIITA_CLIENT_SECRET']; // 登録したアプリケーションの ClientSecret を設定する
+      dotenv.env['QIITA_CLIENT_SECRET']; // 登録したアプリケーションの ClientSecret を設定する
   final keyAccessToken = 'qiita/accessToken';
 
   String createAuthorizeUrl(String state) {

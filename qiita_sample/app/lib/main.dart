@@ -3,7 +3,7 @@ import 'package:app/screen/sign_in.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
-  await DotEnv().load(fileName: '.env');
+  await dotenv.load(fileName: '.env');
   runApp(MyApp());
 }
 
