@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:math' as math;
+
+import 'package:app/repository.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -6,6 +10,18 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final QiitaRepository repository = QiitaRepository();
+
+  late String _state;
+
+  @override
+  void initState() {
+    // これは必須
+    super.initState();
+
+    _state = _randomString(40);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +42,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     // Containerの上にPaddingでも、Container自体にmargin入れても変わらない
                     margin: const EdgeInsets.symmetric(horizontal: 32),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: _signInButtonIsPressed,
                       child: Text(
                         'Qiita ログイン',
                         style: TextStyle(color: Theme.of(context).primaryColor),
@@ -47,6 +63,11 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
+  }
+
+  void _signInButtonIsPressed() {
+    // launchには開きたいURLを渡す
+    launch(repository.createAuthorizeUrl(_state));
   }
 }
 
