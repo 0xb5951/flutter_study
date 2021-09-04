@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'dart:math' as math;
 
 import 'package:app/repository.dart';
@@ -67,7 +67,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void _signInButtonIsPressed() {
     // launchには開きたいURLを渡す
-    launch(repository.createAuthorizeUrl(_state));
+    url_launcher.launch(repository.createAuthorizeUrl(_state));
   }
 
 // lengthで指定された長さのランダムな文字列を生成する
