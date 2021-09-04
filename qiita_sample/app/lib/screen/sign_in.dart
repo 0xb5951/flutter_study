@@ -7,6 +7,8 @@ import 'package:uni_links/uni_links.dart' as uni_links;
 
 import 'package:app/repository.dart';
 
+import 'package:app/screen/item_list.dart';
+
 class SignInScreen extends StatefulWidget {
   @override
   _SignInScreenState createState() => _SignInScreenState();
@@ -101,11 +103,20 @@ class _SignInScreenState extends State<SignInScreen> {
     return String.fromCharCodes(codeUnit);
   }
 
+  // 認証が通ったら、ItemListScreenに遷移する
   void _onAuthorizeCallbackIsCalled(Uri uri) async {
     url_launcher.closeWebView();
 
+    // アクセストークンを取得して、ローカルに保存しておく
     final accessToken =
         await repository.createAccessTokenFromCallbackUri(uri, _state);
+    await repository.saveAccessToken(accessToken);
+
+    // 一方通行の画面遷移。元の画面には戻れない
+    // ItemListScreenに遷移
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (BuildContext context) => ItemListScreen()),
+    );
   }
 }
 
