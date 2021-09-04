@@ -18,16 +18,20 @@ class _SignInScreenState extends State<SignInScreen> {
   final QiitaRepository repository = QiitaRepository();
 
   late String _state;
-  late StreamSubscription<Uri> _subscription;
+  late StreamSubscription? _subscription;
 
   @override
   void initState() {
     // これは必須
     super.initState();
-
     _state = _randomString(40);
-    _subscription = uni_links.getUriLinksStream().listen((Uri uri) {
-      if (uri.path == '/oauth/authorize/callback') {
+    // uriLinkStreamをlistenしている。
+    // これに反応があったら、uriを取得し、以下を実行している。
+    // webページから戻ってきたときに呼ばれる。
+    // 今回はログインページを押して、戻ってきたときに実行される。
+    // 戻ってきたタイミングでStateが初期化されるので、ここでOK
+    _subscription = uni_links.uriLinkStream.listen((Uri? uri) {
+      if (uri!.path == '/oauth/authorize/callback') {
         _onAuthorizeCallbackIsCalled(uri);
       }
     });
@@ -37,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
   void dispose() {
     super.dispose();
     // Steamの購読を停止
-    _subscription.cancel();
+    _subscription!.cancel();
   }
 
   @override
@@ -105,6 +109,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   // 認証が通ったら、ItemListScreenに遷移する
   void _onAuthorizeCallbackIsCalled(Uri uri) async {
+    // ログインボタン押して戻ってきた時に対応している
     url_launcher.closeWebView();
 
     // アクセストークンを取得して、ローカルに保存しておく
