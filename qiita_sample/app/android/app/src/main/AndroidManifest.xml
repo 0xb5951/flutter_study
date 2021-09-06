@@ -13,7 +13,7 @@
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="qiitaapp" android:host="dev.flutterstudy.qiitaapp" />
+        <data android:scheme="qiita-sample" android:host="dev.mike.qiitaapp" />
       </intent-filter>
     </activity>
     <!-- Don't delete the meta-data below.
