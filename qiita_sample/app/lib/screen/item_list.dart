@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' as intl;
 
 class ItemListScreen extends StatefulWidget {
   @override
@@ -66,36 +67,47 @@ class _PostedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {}, // 押したら、その投稿に移動する
-      title: Text(
-        title,
-        style: TextStyle(fontSize: 16),
-      ),
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Image.network(profileUrl),
-      ),
-      subtitle: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, // これで両端に寄せる
-        children: [
-          Text(userName),
-          Text('5/31 10:55'),
-        ],
-      ),
-      trailing: Container(
-        height: 24,
-        width: 24,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.circular(12),
+    return Column(children: [
+      ListTile(
+        onTap: () {}, // 押したら、その投稿に移動する
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 16),
         ),
-        child: Text(
-          '5',
-          style: TextStyle(color: Colors.white),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.network(profileUrl),
+        ),
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, // これで両端に寄せる
+          children: [
+            Text(userName),
+            Text(setUpDataFormat(postedDate)),
+          ],
+        ),
+        trailing: Container(
+          height: 24,
+          width: 24,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(
+            '5',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
-    );
+      Divider(
+        height: 1,
+        color: Colors.black,
+      )
+    ]);
+  }
+
+  String setUpDataFormat(DateTime date) {
+    intl.DateFormat outputformat = intl.DateFormat('M/d k:m');
+    return outputformat.format(date);
   }
 }
