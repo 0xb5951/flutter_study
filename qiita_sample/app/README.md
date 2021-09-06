@@ -52,6 +52,49 @@ Androidの場合は以下のように設定する。
 この場合、このアプリを認識するためのリンクは以下になる。
 qiitaapp://dev.flutterstudy.qiitaapp
 
+リダイレクトURLを上記に設定しても、ちゃんと元のアプリに画面遷移してくれた。
+理由がわからない。
+
+dev.mike.qiitaapp にしたら、リダイレクトされなくなった。
+
+#### AndroidManifestの更新
+ディープリンクの設定で、以下のような動作を行った。
+1. qiitaapp://dev.flutterstudy.qiitaappというリンクで、正しく動作することを確認
+2. AndroidManifest.xml側の設定をqiita-sample://dev.flutterstudy.qiitaappに変更
+3. ホットリスタートして、再度同じ動作を実行
+
+この場合でも、ディープリンクが動作することが確認できた。
+AndroidManifestの更新をどうやって反映するのかがわからない。
+
+
+### 投稿一覧画面周りの実装
+ログインが完了したら、投稿一覧画面に遷移する。
+この画面では、ログインしているユーザが見られる
+他のユーザの投稿一覧を確認することができる。
+
+以下のAPIを使用する。、
+https://qiita.com/api/v2/docs#%E6%8A%95%E7%A8%BF
+```
+GET /api/v2/items
+記事の一覧を作成日時の降順で返します。
+
+page
+ページ番号 (1から100まで)
+Example: 1
+Type: string
+Pattern: /^[0-9]+$/
+per_page
+1ページあたりに含まれる要素数 (1から100まで)
+Example: 20
+Type: string
+Pattern: /^[0-9]+$/
+query
+検索クエリ
+Example: "qiita user:Qiita"
+Type: string
+```
+
+
 ### tips
 - ExpandedとButton組み合わせると、Buttonの要素がExpandedされるので、間に適当なWidgetを入れると良し
 - url_launcherを使って、webブラウザを起動する
