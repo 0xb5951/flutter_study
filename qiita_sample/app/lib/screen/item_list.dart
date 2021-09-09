@@ -1,3 +1,5 @@
+import 'package:app/model/item.dart';
+import 'package:app/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -7,6 +9,20 @@ class ItemListScreen extends StatefulWidget {
 }
 
 class _ItemListScreenState extends State<ItemListScreen> {
+  late List<Item> _itemList;
+  late int _currentPage = 1;
+  late Object _error;
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // 投稿内容を取得する
+    _loadItemList(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +62,29 @@ class _ItemListScreenState extends State<ItemListScreen> {
         ));
   }
 
-  Now() {}
+  void _loadItemList(int page) {
+    // then内は非同期処理になる。ここの内容は飛ばして次を実行
+    QiitaRepository().getItemList(page: page).then((itemList) {
+      // ステートを更新する
+      setState(() {
+        if (page == 1) {
+          _itemList = itemList;
+        } else {
+          _itemList.addAll(itemList);
+        }
+        _currentPage = page;
+      });
+    }).catchError((e) {
+      setState(() {
+        _error = e;
+      });
+    }).whenComplete(() {
+      // 最後に必ず実行される
+      // finallryと一緒
+      _isLoading = false;
+    });
+    _isLoading = true;
+  }
 }
 
 // 一つの投稿要素を生成する
