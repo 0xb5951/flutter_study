@@ -26,18 +26,39 @@ class _ItemListScreenState extends State<ItemListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Qiita App'),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {
-                // 押したら、自分のプロフィールに遷移
-              },
-              // あとでログインユーザのプロフィールに遷移
-              icon: const Icon(Icons.local_movies),
-            )
-          ],
-        ),
+        appBar: AppBar(title: const Text('Qiita App'), actions: [
+          FutureBuilder(
+              // 非同期処理
+              future: QiitaRepository().getAuthenticatedUser(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                final Widget icon = snapshot.hasData
+                    ? _UserProfileIcon(
+                        size: 32,
+                        // snapshot.dataには非同期処理で帰ってきた結果が入っている
+                        // 今回はUserオブジェクトが入っている
+                        profileImageUrl: snapshot.data.profileImageUrl,
+                      )
+                    : const Icon(Icons.person);
+
+                // タップしたら、メニューが立ち上がるタイプのボタン
+                return PopupMenuButton<String>(
+                  icon: icon,
+                  itemBuilder: (context) {
+                    return [
+                      // メニューの項目
+                      const PopupMenuItem<String>(
+                        value: 'profile',
+                        child: Text('プロフィール'),
+                      ),
+                      const PopupMenuItem(
+                        value: 'logout',
+                        child: Text('ログアウト'),
+                      ),
+                    ];
+                  },
+                );
+              })
+        ]),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -84,6 +105,37 @@ class _ItemListScreenState extends State<ItemListScreen> {
       _isLoading = false;
     });
     _isLoading = true;
+  }
+}
+
+class _UserProfileIcon extends StatelessWidget {
+  final double size;
+  final String profileImageUrl;
+
+  const _UserProfileIcon({
+    Key? key,
+    required this.size,
+    required this.profileImageUrl,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(4),
+      child: Image.network(
+        profileImageUrl,
+        width: size,
+        height: size,
+        // ネットワークからの取得に失敗したときに表示する
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            width: size,
+            height: size,
+            color: Colors.grey,
+          );
+        },
+      ),
+    );
   }
 }
 
