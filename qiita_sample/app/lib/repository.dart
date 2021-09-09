@@ -1,7 +1,12 @@
 import 'dart:convert' as convert;
+import 'dart:html';
+import 'package:app/model/tag.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart' as sp;
+import 'package:app/model/item.dart';
+
+import 'model/user.dart';
 
 class QiitaRepository {
   final clientID =
@@ -48,5 +53,80 @@ class QiitaRepository {
     final sp.SharedPreferences prefs = await sp.SharedPreferences.getInstance();
     // keyAccessTokenという名前でaccessTokenをローカルに保存する
     await prefs.setString(keyAccessToken, accessToken);
+  }
+
+  Future<String?> getAccessToken() async {
+    final sp.SharedPreferences prefs = await sp.SharedPreferences.getInstance();
+    // ローカルに保存した変数を取得する
+    return prefs.getString(keyAccessToken);
+  }
+
+  User _mapToUser(Map<String, dynamic> map) {
+    return User(
+      id: map['id'],
+      name: map['name'],
+      description: map['description'],
+      profileImageUrl: map['profile_image_url'],
+      itemsCount: map['items_count'],
+      followersCount: map['followers_count'],
+    );
+  }
+
+  // Qiitaの投稿を取得してくる
+  Future<List<Item>> getItemList({int page = 1, QiitaItemsQuery? query}) async {
+    final String accessToken = getAccessToken() as String;
+    String url = 'https://qiita.com/api/v2/items?page=$page';
+
+    if (query != null) {
+      url += '&query=${query.buildString()}';
+    }
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    final persedBody = convert.jsonDecode(response.body);
+    // パースしたボディをList<dynamic>にキャストしている
+    // それに対してmap内の処理を行ってリスト化している
+    // dynamicで型をある程度指定せずに宣言できる
+    final itemList = (persedBody as List<dynamic>).map((item) {
+      return Item(
+        id: item['id'],
+        title: item['title'],
+        renderedBody: item['rendered_body'],
+        createdAt: DateTime.parse(item['created_at']),
+        likesCount: item['likes_count'],
+        tags: (item['tags'] as List<dynamic>).map((tag) {
+          return Tag(
+            name: tag['name'],
+            versions: (tag['versions'] as List<dynamic>)
+                .map((v) => v as String)
+                .toList(),
+          );
+        }).toList(),
+        user: _mapToUser(item['user']),
+      );
+    }).toList();
+
+    return itemList;
+  }
+}
+
+class QiitaItemsQuery {
+  late String userID;
+
+  QiitaItemsQuery userIdEquals(String id) {
+    userID = id;
+    return this;
+  }
+
+  String buildString() {
+    List<String> queries = [];
+    queries.add('user:$userID');
+
+    return queries.join(' ');
   }
 }
