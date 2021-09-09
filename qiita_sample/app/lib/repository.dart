@@ -20,6 +20,20 @@ class QiitaRepository {
     return 'https://qiita.com/api/v2/oauth/authorize?client_id=$clientID&scope=$scope&state=$state';
   }
 
+  Future<User> getAuthenticatedUser() async {
+    final accessToken = await getAccessToken();
+    final response = await http.get(
+      Uri.parse('https://qiita.com/api/v2/authenticated_user'),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+    final body = convert.jsonDecode(response.body);
+    final user = _mapToUser(body);
+
+    return user;
+  }
+
   // 内部で非同期処理を行うからFutureクラスつけている。
   // 戻り値の型は<>に書いてある
   // qiitaのアクセストークンを取得してくる
@@ -61,6 +75,7 @@ class QiitaRepository {
     return prefs.getString(keyAccessToken);
   }
 
+  // ユーザオブジェクトに変換する
   User _mapToUser(Map<String, dynamic> map) {
     return User(
       id: map['id'],
