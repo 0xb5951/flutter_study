@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:app/model/Tag.dart';
+import 'package:app/model/User.dart';
+
+// Qiitaから取得した投稿一覧を表すモデル
+
 class Item {
   final String id;
   final String title;
