@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+// Qiitaから取得した投稿に付与されるタグを管理するクラス
 
 class Tag {
   final String name;

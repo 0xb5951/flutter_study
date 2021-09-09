@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+// Qiitaから取ってきたユーザを管理するモデル
 class User {
   final String id;
   final String name;

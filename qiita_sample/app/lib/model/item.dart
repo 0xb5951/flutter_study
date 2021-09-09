@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-
-import 'package:app/model/Tag.dart';
-import 'package:app/model/User.dart';
+import 'package:app/model/tag.dart';
+import 'package:app/model/user.dart';
 
 // Qiitaから取得した投稿一覧を表すモデル
 
