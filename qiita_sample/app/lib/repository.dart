@@ -23,6 +23,8 @@ class QiitaRepository {
 
   Future<User> getAuthenticatedUser() async {
     final accessToken = await getAccessToken();
+    print('getAuthenticatedUser');
+    print(accessToken);
     final response = await client.get(
       Uri.parse('https://qiita.com/api/v2/authenticated_user'),
       headers: {
@@ -30,7 +32,8 @@ class QiitaRepository {
       },
     );
     final body = convert.jsonDecode(response.body);
-    final user = _mapToUser(body);
+    print(body);
+    final user = mapToUser(body);
 
     return user;
   }
@@ -44,6 +47,7 @@ class QiitaRepository {
   ) async {
     final String? _state = uri.queryParameters['state'];
     final String? _code = uri.queryParameters['code'];
+    late String accessToken;
 
     // 予想されているState以外は逃がす
     if (expectedState != _state) {
@@ -62,14 +66,12 @@ class QiitaRepository {
     )
         .then((response) {
       final body = convert.jsonDecode(response.body);
-      final accessToken = body['token'];
-
-      return accessToken;
+      accessToken = body['token'];
     }).catchError((err) {
       throw Exception(err);
     });
 
-    return '';
+    return accessToken;
   }
 
   Future<void> saveAccessToken(String accessToken) async {
@@ -84,27 +86,19 @@ class QiitaRepository {
     return prefs.getString(keyAccessToken);
   }
 
-  // ユーザオブジェクトに変換する
-  User _mapToUser(Map<String, dynamic> map) {
-    return User(
-      id: map['id'],
-      name: map['name'],
-      description: map['description'],
-      profileImageUrl: map['profile_image_url'],
-      itemsCount: map['items_count'],
-      followersCount: map['followers_count'],
-    );
-  }
-
   // Qiitaの投稿を取得してくる
   Future<List<Item>> getItemList({int page = 1, QiitaItemsQuery? query}) async {
-    final Future<String?> accessToken = getAccessToken();
+    print('call getItemList');
+    final accessToken = await getAccessToken();
     String url = 'https://qiita.com/api/v2/items?page=$page';
 
     if (query != null) {
       url += '&query=${query.buildString()}';
     }
 
+    print({
+      'Authorization': 'Bearer $accessToken',
+    });
     final response = await http.get(
       Uri.parse(url),
       headers: {
@@ -112,29 +106,35 @@ class QiitaRepository {
       },
     );
 
+    print('call api');
+
     final persedBody = convert.jsonDecode(response.body);
+
     // パースしたボディをList<dynamic>にキャストしている
     // それに対してmap内の処理を行ってリスト化している
     // dynamicで型をある程度指定せずに宣言できる
     final itemList = persedBody.map((item) {
+      print(item['user']);
       return Item(
         id: item['id'],
         title: item['title'],
-        renderedBody: item['rendered_body'],
+        //   renderedBody: item['rendered_body'],
         createdAt: DateTime.parse(item['created_at']),
-        likesCount: item['likes_count'],
-        tags: (item['tags'] as List<dynamic>).map((tag) {
-          return Tag(
-            name: tag['name'],
-            versions: (tag['versions'] as List<dynamic>)
-                .map((v) => v as String)
-                .toList(),
-          );
-        }).toList(),
-        user: _mapToUser(item['user']),
+        //   likesCount: item['likes_count'],
+        //   tags: (item['tags'] as List<dynamic>).map((tag) {
+        //     return Tag(
+        //       name: tag['name'],
+        //       versions: (tag['versions'] as List<dynamic>)
+        //           .map((v) => v as String)
+        //           .toList(),
+        //     );
+        //   }).toList(),
+        user: mapToUser(item['user']),
       );
     }).toList();
 
+    print('itemList');
+    print(itemList);
     return itemList;
   }
 }

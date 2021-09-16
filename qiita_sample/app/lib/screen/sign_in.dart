@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
@@ -8,6 +9,7 @@ import 'package:uni_links/uni_links.dart' as uni_links;
 import 'package:app/repository.dart';
 
 import 'package:app/screen/item_list.dart';
+import 'package:app/component/url_component.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -16,6 +18,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final QiitaRepository repository = QiitaRepository();
+  final UrlComponent urlComponent = UrlComponent();
 
   late String _state;
   late StreamSubscription? _subscription;
@@ -24,7 +27,7 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     // これは必須
     super.initState();
-    _state = _randomString(40);
+    _state = urlComponent.randomString(40);
     // uriLinkStreamをlistenしている。
     // これに反応があったら、uriを取得し、以下を実行している。
     // webページから戻ってきたときに呼ばれる。
@@ -91,20 +94,6 @@ class _SignInScreenState extends State<SignInScreen> {
   void _signInButtonIsPressed() {
     // launchには開きたいURLを渡す
     url_launcher.launch(repository.createAuthorizeUrl(_state));
-  }
-
-// lengthで指定された長さのランダムな文字列を生成する
-  String _randomString(int length) {
-    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    final rand = math.Random.secure();
-    final codeUnit = List.generate(length, (index) {
-      // charsの文字列からランダムなインデックスを指定する
-      final n = rand.nextInt(chars.length);
-      // 指定したインデックスの文字列をUTF-16のコードに変換して返す。ex. 0x41 = A
-      return chars.codeUnitAt(n);
-    });
-    // codeUnitにはUTF-16化した文字コードのリストが入っている
-    return String.fromCharCodes(codeUnit);
   }
 
   // 認証が通ったら、ItemListScreenに遷移する
