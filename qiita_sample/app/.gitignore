@@ -47,3 +47,4 @@ app.*.map.json
 
 # User setting
 .env
+*.mocks.dart
