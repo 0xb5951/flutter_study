@@ -1,3 +1,5 @@
+import 'package:app/model/item.dart';
+import 'package:app/model/user.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -88,7 +90,7 @@ void main() async {
     //         return accessToken;
     //       }),
     //       'token');
-    // });
+  });
 
   //   test('認証に失敗した時', () async {
   //     // Qiitaからのレスポンスをmock化
@@ -119,4 +121,30 @@ void main() async {
       expect(await repository.getAccessToken(), 'testToken');
     });
   });
+
+  // group('getItemList', () {
+  //   test('ページが正しく取得できる', () async {
+  //     // tokenのモックを作成
+  //     // when(repository.getAccessToken()).thenAnswer((_) async => 'testToken');
+
+  //     final accessToken = await repository.getAccessToken();
+  //     // Qiitaのモックを作成
+  //     final Uri mockUrl = Uri.parse('https://qiita.com/api/v2/items?page=1');
+  //     final responsePayload = convert.jsonEncode({
+  //       'response_code': '200',
+  //       'token': 'token',
+  //     });
+
+  //     when(httpClient.post(
+  //       mockUrl,
+  //       headers: {
+  //         'Authorization': 'Bearer $accessToken',
+  //       },
+  //     )).thenAnswer((_) async => http.Response(responsePayload, 200));
+
+  //     final List listItem = await repository.getItemList();
+
+  //     expect(listItem[0], "c686397e4a0f4f11683d");
+  //   });
+  // });
 }

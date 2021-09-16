@@ -1,5 +1,5 @@
 import 'dart:convert' as convert;
-import 'dart:html';
+import 'dart:io';
 import 'package:app/model/tag.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +14,7 @@ class QiitaRepository {
   final clientSecret =
       dotenv.env['QIITA_CLIENT_SECRET']; // 登録したアプリケーションの ClientSecret を設定する
   final keyAccessToken = 'qiita/accessToken';
+  http.Client client = http.Client();
 
   String createAuthorizeUrl(String state) {
     const scope = 'read_qiita';
@@ -22,7 +23,7 @@ class QiitaRepository {
 
   Future<User> getAuthenticatedUser() async {
     final accessToken = await getAccessToken();
-    final response = await http.get(
+    final response = await client.get(
       Uri.parse('https://qiita.com/api/v2/authenticated_user'),
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -48,7 +49,9 @@ class QiitaRepository {
     if (expectedState != _state) {
       throw Exception('The state is different from expectedState.');
     }
-    final response = await http.post(
+
+    await client
+        .post(
       Uri.parse('https://qiita.com/api/v2/access_tokens'),
       headers: {'content-type': 'application/json'},
       body: convert.jsonEncode({
@@ -56,11 +59,17 @@ class QiitaRepository {
         'client_secret': clientSecret,
         'code': _code,
       }),
-    );
-    final body = convert.jsonDecode(response.body);
-    final accessToken = body['token'];
+    )
+        .then((response) {
+      final body = convert.jsonDecode(response.body);
+      final accessToken = body['token'];
 
-    return accessToken;
+      return accessToken;
+    }).catchError((err) {
+      throw Exception(err);
+    });
+
+    return '';
   }
 
   Future<void> saveAccessToken(String accessToken) async {
@@ -89,7 +98,7 @@ class QiitaRepository {
 
   // Qiitaの投稿を取得してくる
   Future<List<Item>> getItemList({int page = 1, QiitaItemsQuery? query}) async {
-    final String accessToken = getAccessToken() as String;
+    final Future<String?> accessToken = getAccessToken();
     String url = 'https://qiita.com/api/v2/items?page=$page';
 
     if (query != null) {
@@ -107,7 +116,7 @@ class QiitaRepository {
     // パースしたボディをList<dynamic>にキャストしている
     // それに対してmap内の処理を行ってリスト化している
     // dynamicで型をある程度指定せずに宣言できる
-    final itemList = (persedBody as List<dynamic>).map((item) {
+    final itemList = persedBody.map((item) {
       return Item(
         id: item['id'],
         title: item['title'],
