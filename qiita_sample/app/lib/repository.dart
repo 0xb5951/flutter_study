@@ -32,8 +32,7 @@ class QiitaRepository {
       },
     );
     final body = convert.jsonDecode(response.body);
-    print(body);
-    final user = mapToUser(body);
+    final user = User.fromJson(body);
 
     return user;
   }
@@ -129,7 +128,7 @@ class QiitaRepository {
         //           .toList(),
         //     );
         //   }).toList(),
-        user: mapToUser(item['user']),
+        user: User.fromJson(item['user']),
       );
     }).toList();
 
