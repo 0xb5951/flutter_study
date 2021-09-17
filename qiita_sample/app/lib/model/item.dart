@@ -21,4 +21,18 @@ class Item {
     required this.tags,
     required this.user,
   });
+
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
+      id: json['id'],
+      title: json['title'],
+      renderedBody: json['rendered_body'],
+      createdAt: DateTime.parse(json['created_at']),
+      likesCount: json['likes_count'],
+      tags: (json['tags'] as List<dynamic>).map((tagJson) {
+        return Tag.fromJson(tagJson);
+      }).toList(),
+      user: User.fromJson(json['user']),
+    );
+  }
 }
