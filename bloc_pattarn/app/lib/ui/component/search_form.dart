@@ -24,7 +24,7 @@ class SearchForm extends StatelessWidget {
               "検索",
               style: TextStyle(color: Colors.black),
             ),
-            style: TextButton.styleFrom(backgroundColor: Colors.grey),
+            style: TextButton.styleFrom(backgroundColor: Colors.grey[400]),
             onPressed: () {},
           ),
         ],
