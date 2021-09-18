@@ -1,13 +1,10 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
-import 'dart:math' as math;
 import 'package:uni_links/uni_links.dart' as uni_links;
 
 import 'package:app/repository.dart';
-
 import 'package:app/screen/item_list.dart';
 import 'package:app/component/url_component.dart';
 
