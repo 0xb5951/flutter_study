@@ -1,16 +1,27 @@
-# app
 
-A new Flutter project.
+## 要件
 
-## Getting Started
+- 検索内容が入力できる
+- 入力された内容を元にGitHubに検索クエリを投げられる
+- 取得した情報を元に、リポジトリの一覧が表示できる
+- それぞれの内容をタップしたら、webviewで詳細画面に移動する
+- 検索条件が変更されたら、一覧も更新される
 
-This project is a starting point for a Flutter application.
+## 実装
 
-A few resources to get you started if this is your first Flutter project:
+1. 検索条件を入力できる部分
+2. 入力した検索条件を元に、GitHubのAPIからデータを取得する
+3. データを受け取って、一覧表示する部分を実装
+4. タップしたときの挙動や、細かい動きを実装
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## フォルダ構成案
+コードのアーキテクチャは以下と一緒でいいと思った。
+https://qiita.com/arthur_foreign/items/4b1bf1892439780c4690
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+### UI
+screenとcomponentで分離する。
+- Screen層では、BLoC層で管理されている状態をProviderで受け取って、下位Widget(Component層)で扱えるようにする
+- Component層では、Screen層からProvider.ofで状態を受け取ってUIを描画する
+
+## tips
