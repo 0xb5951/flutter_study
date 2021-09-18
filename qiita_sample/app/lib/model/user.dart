@@ -20,7 +20,7 @@ class User {
     return User(
       id: json['id'],
       name: json['name'],
-      description: json['description'],
+      description: json['description'] ?? '',
       profileImageUrl: json['profile_image_url'],
       itemsCount: json['items_count'],
       followersCount: json['followers_count'],
