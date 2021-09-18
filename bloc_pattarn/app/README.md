@@ -24,4 +24,21 @@ screenとcomponentで分離する。
 - Screen層では、BLoC層で管理されている状態をProviderで受け取って、下位Widget(Component層)で扱えるようにする
 - Component層では、Screen層からProvider.ofで状態を受け取ってUIを描画する
 
+### bloc
+UIで使う変数などの値を管理。
+
+### data
+外部からデータを取得してくる。
+データ定義とか、持ってきたいときはここに定義。
+
+#### data_source
+外部のAPI叩いて、モデルに変換するまでを担当。
+
+#### model
+そのときに使うデータモデルを定義
+
+### domain
+ビジネスロジックを担当。
+
+
 ## tips
