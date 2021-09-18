@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/data/data_source/github_api_provider.dart';
 import 'package:app/data/deta_source/github_api_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -260,7 +261,7 @@ void main() {
           .thenAnswer((_) async => http.Response(responsePayload, 200));
       verifyNever(mockClient.get(mockUrl));
 
-      final response = await GitHubApiProvider().fetchRepositoryList('flutter');
+      // final response = await GitHubApiProvider().fetchRepositoryList('flutter');
 
       // expect(response.length, 2);
       // expect(response[0].fullName, 'flutter/flutter');

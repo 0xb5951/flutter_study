@@ -6,10 +6,10 @@ class GitHubApiProvider {
   Client httpClient = Client();
   final _baseUrl = "https://api.github.com/search/repositories?sort=stars&q=";
 
-  Future<List<RepositoryItem>> fetchRepositoryList(String query) async {
-    print(query);
+  Future<List<RepositoryItem>> fetchRepositoryList(String searchQuery) async {
+    print(searchQuery);
 
-    final response = await httpClient.get(Uri.parse(_baseUrl + query));
+    final response = await httpClient.get(Uri.parse(_baseUrl + searchQuery));
     print(response.body.toString());
     print(response.statusCode);
 
