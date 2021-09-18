@@ -1,5 +1,7 @@
+import 'package:app/blocs/search_bloc.dart';
 import 'package:app/ui/screen/post_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +16,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SafeArea(child: PostView()),
+      home: MultiProvider(
+        providers: [
+          Provider<SearchBloc>(
+            create: (context) => SearchBloc(),
+            dispose: (context, bloc) => bloc.dispose(),
+          )
+        ],
+        child: PostView(),
+      ),
     );
   }
 }
