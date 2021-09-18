@@ -66,6 +66,8 @@ dev.mike.qiitaapp にしたら、リダイレクトされなくなった。
 この場合でも、ディープリンクが動作することが確認できた。
 AndroidManifestの更新をどうやって反映するのかがわからない。
 
+解. ホットリスタートではAndroidManifestの更新は反映されない。
+もう一度Flutter runし直したら、正しく動作した。
 
 ### 投稿一覧画面周りの実装
 ログインが完了したら、投稿一覧画面に遷移する。
@@ -99,3 +101,21 @@ Type: string
 - ExpandedとButton組み合わせると、Buttonの要素がExpandedされるので、間に適当なWidgetを入れると良し
 - url_launcherを使って、webブラウザを起動する
 - 秘匿情報の管理にはflutter_dotenvを使う
+- testの中でdotenv使う場合は、以下の初期化を行う必要がある
+  TestWidgetsFlutterBinding.ensureInitialized();
+  https://stackoverflow.com/questions/60686746/how-to-access-flutter-environment-variables-from-tests
+- testは関数ごとにgruopでくくる
+- widgetクラスの中で、別の一般クラスを呼び出すにはstaticつければ良い
+- 例外をテストする場合は以下のようにする
+```
+expect(repository.createAccessTokenFromCallbackUri(uri, 'correct_state'),
+    throwsA(const TypeMatcher<Exception>()));
+```
+- mockクラスの生成はbuild_runnerを使用する
+- mockクラスは、ここの環境で生成する
+- flutter logsコマンドで標準出力が見れる
+- initStateはホットリロードでは初期化されない
+https://flutter.dev/docs/development/tools/hot-reload
+
+- LateInitializationErrorはlate宣言された変数が、代入前に使われていることが原因
+- CircularProgressIndicatorは読み込まれるまで、Stateが更新され続ける
