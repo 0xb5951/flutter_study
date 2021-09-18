@@ -1,12 +1,11 @@
 import 'dart:convert' as convert;
-import 'dart:io';
-import 'package:app/model/tag.dart';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart' as sp;
-import 'package:app/model/item.dart';
 
 import 'model/user.dart';
+import 'package:app/model/item.dart';
 
 class QiitaRepository {
   final clientID =
@@ -87,7 +86,6 @@ class QiitaRepository {
 
   // Qiitaの投稿を取得してくる
   Future<List<Item>> getItemList({int page = 1, QiitaItemsQuery? query}) async {
-    print('call getItemList');
     final accessToken = await getAccessToken();
     String url = 'https://qiita.com/api/v2/items?page=$page';
 
@@ -95,9 +93,6 @@ class QiitaRepository {
       url += '&query=${query.buildString()}';
     }
 
-    print({
-      'Authorization': 'Bearer $accessToken',
-    });
     final response = await http.get(
       Uri.parse(url),
       headers: {
@@ -105,36 +100,16 @@ class QiitaRepository {
       },
     );
 
-    print('call api');
-
     final persedBody = convert.jsonDecode(response.body);
 
     // パースしたボディをList<dynamic>にキャストしている
     // それに対してmap内の処理を行ってリスト化している
     // dynamicで型をある程度指定せずに宣言できる
     final itemList = persedBody.map((item) {
-      print(item['user']);
-      return Item(
-        id: item['id'],
-        title: item['title'],
-        //   renderedBody: item['rendered_body'],
-        createdAt: DateTime.parse(item['created_at']),
-        //   likesCount: item['likes_count'],
-        //   tags: (item['tags'] as List<dynamic>).map((tag) {
-        //     return Tag(
-        //       name: tag['name'],
-        //       versions: (tag['versions'] as List<dynamic>)
-        //           .map((v) => v as String)
-        //           .toList(),
-        //     );
-        //   }).toList(),
-        user: User.fromJson(item['user']),
-      );
+      return Item.fromJson(item);
     }).toList();
 
-    print('itemList');
-    print(itemList);
-    return itemList;
+    return itemList.cast<Item>() as List<Item>;
   }
 }
 
