@@ -1,7 +1,7 @@
 class RepositoryItem {
   String fullName;
-  String stargazersCount;
-  String htmlUrl;
+  int stargazersCount;
+  Uri htmlUrl;
 
   RepositoryItem({
     required this.fullName,
@@ -13,7 +13,17 @@ class RepositoryItem {
     return RepositoryItem(
       fullName: json['full_name'],
       stargazersCount: json['stargazers_count'],
-      htmlUrl: json['html_url'],
+      htmlUrl: Uri.parse(json['html_url']),
     );
+  }
+
+  static List<RepositoryItem> repositoryListFromJson(
+      Map<String, dynamic> json) {
+    return json['items']
+        .map((item) {
+          return RepositoryItem.fromJson(item);
+        })
+        .toList()
+        .cast<RepositoryItem>() as List<RepositoryItem>;
   }
 }
